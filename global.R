@@ -63,4 +63,4 @@ boxes <- purrr::pmap(box_config, box_factory)
 
 
 # READ DATA
-main_pl_tab <- readRDS('main_pl_tab.rds')
+main_pl_tab <- readRDS('data/main_pl_tab.rds')

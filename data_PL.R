@@ -49,4 +49,4 @@ main_pl_tab$`Rezultat FT` <- if_else(main_pl_tab$`Rezultat FT` == "H", main_pl_t
 )
 )
 
-saveRDS(main_pl_tab, file = 'lamapka_1.0v/data/main_pl_tab.rds')
+saveRDS(main_pl_tab, file = 'data/main_pl_tab.rds')
