@@ -23,6 +23,10 @@ ui = dashboardPage(
         sidebar = dashboardSidebar(
             sidebarMenu(
                 menuItem(
+                        "Strona główna",
+                        tabName = 'home_tab'
+                ),
+                menuItem(
                     "Premier League",
                     tabName = "premier_league",
                     icon = icon("futbol"),
@@ -45,7 +49,12 @@ ui = dashboardPage(
                             fluidRow(
                                  DT::dataTableOutput('premier_league_data')
                             )
-                            )
+                            ),
+                    tabItem(tabName = "lamaki_pl",
+                            fluidRow(
+                                    textInput("druzyna", "Drużyna: ", placeholder = "podaj nazwe drużyny"),
+                                    DT::dataTableOutput('premier_league_lamaki')
+                            ))
             )
         ),
         controlbar = dashboardControlbar(
