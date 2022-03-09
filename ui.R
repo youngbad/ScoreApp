@@ -1,7 +1,7 @@
 ui = dashboardPage(
         header = dashboardHeader(
             title = dashboardBrand(
-                title = "Łamapka",
+                title = "FiXeD",
                 color = "primary",
                 image = "https://adminlte.io/themes/v3/dist/img/AdminLTELogo.png"
             ),
@@ -23,18 +23,18 @@ ui = dashboardPage(
         sidebar = dashboardSidebar(
             sidebarMenu(
                 menuItem(
-                        "Strona główna",
+                        "Home",
                         tabName = 'home_tab'
                 ),
                 menuItem(
                     "Premier League",
                     tabName = "premier_league",
                     icon = icon("futbol"),
-                    menuSubItem("Tabela głowna",
+                    menuSubItem("Main tab",
                                 tabName = "main_tab"),
-                    menuSubItem("Łamaki",
+                    menuSubItem("Fixed matches",
                                 tabName = "lamaki_pl"),
-                    menuSubItem("Statystyki meczy",
+                    menuSubItem("Match stats",
                                 tabName = 'statystyki_meczy_pl')
                     
                 ),
@@ -54,7 +54,14 @@ ui = dashboardPage(
                             fluidRow(
                                     textInput("druzyna", "Drużyna: ", placeholder = "podaj nazwe drużyny"),
                                     DT::dataTableOutput('premier_league_lamaki')
-                            ))
+                            )
+                            ),
+                    tabItem(tabName = "statystyki_meczy_pl",
+                            fluidRow(
+                                    textInput("druzyna", "Drużyna: ", placeholder = "podaj nazwe drużyny"),
+                                    DT::dataTableOutput('premier_league_stats')
+                            )
+                            )
             )
         ),
         controlbar = dashboardControlbar(
