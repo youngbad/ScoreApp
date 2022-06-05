@@ -2,25 +2,60 @@ shinyServer(function(input, output) {
 
   output$premier_league_data <- DT::renderDataTable({
     
-    main_pl_tab$Data <- as.Date(main_pl_tab$Data, format = '%y%m%d')
+ 
     
     main_pl_tab
     
   })
   
-  output$premier_league_lamaki <- DT::renderDataTable({
-    
-    lamaki_pl_tab <- main_pl_tab
-    
-    lamaki_pl_tab$Data <- as.Date(lamaki_pl_tab$Data, format = '%y%m%d')
-    
-    lamaki_pl_tab <- lamaki_pl_tab %>%
+  fixes_pl_tab <- reactiveVal({
+    fixes_pl_tab <- main_pl_tab
+
+    fixes_pl_tab <- fixes_pl_tab %>%
       filter(`FT / HT` == "1/2" | `FT / HT` == "2/1")
     
-    lamaki_pl_tab
+    fixes_pl_tab <- fixes_pl_tab %>%
+      mutate('Actions' = shinyInput(
+        FUN = actionButton,
+        n = length(fixes_pl_tab$Data),
+        id = 'button_',
+        label = "More info...",
+        onclick = 'Shiny.setInputValue(\"select_button\", this.id, {priority: \"event\"})')
+      )
+    
     
   })
   
+  output$premier_league_lamaki <- DT::renderDataTable({
+    
+    fixes_pl_tab()
+
+    
+  },
+  escape = FALSE,
+  
+  # turn off row selection otherwise you'll also select that row when you
+  # click on the actionButton 
+  selection = 'none'
+  )
+  
+  observeEvent(input$select_button, {
+    showModal(modalDialog(
+      title = "Somewhat important message",
+      "This is a somewhat important message.",
+      easyClose = TRUE,
+      footer = NULL
+    ))
+  })
+  
+  employee <- eventReactive(input$select_button, {
+    # take the value of input$select_button, e.g. "button_1"
+    # get the button number (1) and assign to selectedRow
+    selectedRow <- as.numeric(strsplit(input$select_button, "_")[[1]][2])
+    
+    # get the value of the "Name" column in the data.frame for that row
+    paste('click on ',df()[selectedRow,"Name"])
+  })
   
   output$premier_league_stats <- DT::renderDataTable({
     

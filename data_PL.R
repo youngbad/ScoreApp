@@ -14,6 +14,9 @@ main_pl_tab <- pl_2019_2022 %>% select(
   "Rezultat HT" = HTR, "Sędzia" =  Referee, "Rezultat" = FTR
 )
 
+
+
+
 main_pl_tab <- main_pl_tab %>% mutate(`FT / HT` =
                                         if_else(`Rezultat FT` == "H" & `Rezultat HT` == "H", "1/1", if_else(
                                           `Rezultat FT` == "H" & `Rezultat HT` == "A", "2/1", if_else(
@@ -31,7 +34,7 @@ main_pl_tab <- main_pl_tab %>% mutate(`FT / HT` =
                                               )
                                             )
                                           )
-                                        ) )
+                                        ) ) 
 )
 
 main_pl_tab$Rezultat <- if_else(main_pl_tab$Rezultat == "H", main_pl_tab$Gospodarze, if_else(

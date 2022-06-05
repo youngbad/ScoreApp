@@ -33,9 +33,9 @@ ui = dashboardPage(
                     menuSubItem("Main tab",
                                 tabName = "main_tab"),
                     menuSubItem("Fixed matches",
-                                tabName = "lamaki_pl"),
+                                tabName = "fixes_pl"),
                     menuSubItem("Match stats",
-                                tabName = 'statystyki_meczy_pl')
+                                tabName = 'match_stats_pl')
                     
                 ),
                 menuItem(
@@ -50,15 +50,14 @@ ui = dashboardPage(
                                  DT::dataTableOutput('premier_league_data')
                             )
                             ),
-                    tabItem(tabName = "lamaki_pl",
+                    tabItem(tabName = "fixes_pl",
                             fluidRow(
-                                    textInput("druzyna", "Drużyna: ", placeholder = "podaj nazwe drużyny"),
                                     DT::dataTableOutput('premier_league_lamaki')
                             )
                             ),
-                    tabItem(tabName = "statystyki_meczy_pl",
+                    tabItem(tabName = "match_stats_pl",
                             fluidRow(
-                                    textInput("druzyna", "Drużyna: ", placeholder = "podaj nazwe drużyny"),
+                                    textInput("team_stats_pl", "Drużyna: ", placeholder = "podaj nazwe drużyny"),
                                     DT::dataTableOutput('premier_league_stats')
                             )
                             )
