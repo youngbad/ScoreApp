@@ -1,23 +1,29 @@
 shinyServer(function(input, output) {
+  
 
   output$premier_league_data <- DT::renderDataTable({
     
  
     
-    main_pl_tab
+    main_pl_tab <- main_eng_data %>% filter(Div == "E0")
     
   })
   
-  fixes_pl_tab <- reactiveVal({
-    fixes_pl_tab <- main_pl_tab
-
-    fixes_pl_tab <- fixes_pl_tab %>%
-      filter(`FT / HT` == "1/2" | `FT / HT` == "2/1")
+  fix_pl_tab <- reactiveVal({
     
-    fixes_pl_tab <- fixes_pl_tab %>%
+    fix_pl_tab <- main_eng_data %>% filter(Div == "E0")
+
+    fix_pl_tab <- fix_pl_tab %>%
+      filter(`FT / HT` == "1/2" | `FT / HT` == "2/1") %>%
+      select(Date, HomeTeam, AwayTeam, FTR,
+             HTR, Referee, FTR, `FT / HT`)
+      
+      
+    
+      fix_pl_tab <- fix_pl_tab %>%
       mutate('Actions' = shinyInput(
         FUN = actionButton,
-        n = length(fixes_pl_tab$Data),
+        n = length(fix_pl_tab$Date),
         id = 'button_',
         label = "More info...",
         onclick = 'Shiny.setInputValue(\"select_button\", this.id, {priority: \"event\"})')
