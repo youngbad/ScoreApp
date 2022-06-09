@@ -7,7 +7,7 @@ library(Hmisc)
 
 ### England ###
 
-page <- read_html("https://www.football-data.co.uk/englandm.php")
+page <- read_html("https://www.football-data.co.uk/")
 league_sites <- tibble()
 
 
@@ -17,9 +17,11 @@ league_sites <- page %>%
   str_subset("\\.php") #%>% # find those that end in php
 
 league_sites <- as.data.frame(league_sites) %>% distinct()
-league_sites <- league_sites[c(39:49,52:69), ]
+league_sites <- league_sites[c(41:62,65:96)]
 
 csv_links <- tibble()
+league_sites <- unique(league_sites)
+
 
 for(link in league_sites){
   
@@ -31,33 +33,30 @@ for(link in league_sites){
     str_subset("\\.csv") #%>% # find those that end in csv
   
   
-  csv <- tibble(csv)
+  csv <- tibble(csv, link)
   csv_links <- bind_rows(csv_links, csv)
 }
 
+eng_links <- csv_links[grepl('england', csv_links$link), 'csv']
+germany_links <- csv_links[grepl('germany', csv_links$link), 'csv']
+spain_links <- csv_links[grepl('spain', csv_links$link), 'csv']
+italy_links <- csv_links[grepl('italy', csv_links$link), 'csv']
+france_links <-  csv_links[grepl('france', csv_links$link), 'csv']
+
 
 ### add part for each country read find CSV
-
-# X <- read.csv(url("https://www.football-data.co.uk/mmz4281/2122/E0.csv"))
-# eng_fb_data <- data_frame(c(colnames_eng_fb_data))    
-
+### ENGLAND ###
 main_eng_data <-tibble()
 
-# eng_fb_data <- X[0, ]
-# rm(X)
-# csv_links <- as.data.frame(csv_links)
-
-csv_links <- csv_links[1:635, ]
-
-for (i in length(csv_links$csv)){
+for (i in length(eng_links$csv)){
   
-  link_to_read <- csv_links[i,]
+  link_to_read <- eng_links[i,]
   X <- read.csv(paste0('https://www.football-data.co.uk/',link_to_read))
  
-  main_eng_data <- bind_rows(main_eng_data, X)
-
+  main_eng_data <- bind_rows(main_eng_data, X) ### need to repair this part
 }
 
+### and automize this part 
 main_eng_data <- eng_fb_data %>% mutate(`FT / HT` =
                                              if_else(`FTR` == "H" & `HTR` == "H", "1/1", if_else(
                                                `FTR` == "H" & `HTR` == "A", "2/1", if_else(
