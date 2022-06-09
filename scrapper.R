@@ -2,10 +2,8 @@ library(rvest)
 library(stringr)
 library(Hmisc)
 
-
-
-
-### England ###
+### Very basic web scrapping method for football data
+### Verson: 09/06/2022 
 
 page <- read_html("https://www.football-data.co.uk/")
 league_sites <- tibble()
@@ -16,7 +14,6 @@ league_sites <- page %>%
   html_attr("href") %>%     # get the url
   str_subset("\\.php") #%>% # find those that end in php
 
-league_sites <- as.data.frame(league_sites) %>% distinct()
 league_sites <- league_sites[c(41:62,65:96)]
 
 csv_links <- tibble()
@@ -44,17 +41,49 @@ italy_links <- csv_links[grepl('italy', csv_links$link), 'csv']
 france_links <-  csv_links[grepl('france', csv_links$link), 'csv']
 
 
-### add part for each country read find CSV
 ### ENGLAND ###
 main_eng_data <-tibble()
 
-for (i in length(eng_links$csv)){
+for(link in eng_links$csv){
   
-  link_to_read <- eng_links[i,]
+  link_to_read <- link
   X <- read.csv(paste0('https://www.football-data.co.uk/',link_to_read))
  
-  main_eng_data <- bind_rows(main_eng_data, X) ### need to repair this part
+  main_eng_data <- bind_rows(main_eng_data, X)
 }
+### GERMANY ###
+main_germany_data <- tibble()
+for(link in germany_links$csv){
+  
+  link_to_read <- link
+  X <- read.csv(paste0('https://www.football-data.co.uk/',link_to_read))
+  
+  main_germany_data <- bind_rows(main_germany_data, X)
+}
+### SPAIN ###
+#check the error while combine X, and dataset
+#Error: Can't combine `..1$BbAHh` <double> and `..2$BbAHh` <character>.
+main_spain_data <- tibble()
+for(link in spain_links$csv){
+  
+  link_to_read <- link
+  X <- read.csv(paste0('https://www.football-data.co.uk/',link_to_read))
+  
+  main_spain_data <- bind_rows(main_spain_data, X)
+}
+### FRANCE ###
+main_france_data <- tibble()
+for(link in france_links$csv){
+  
+  link_to_read <- link
+  X <- read.csv(paste0('https://www.football-data.co.uk/',link_to_read))
+  
+  main_france_data <- bind_rows(main_france_data, X)
+}
+
+
+
+
 
 ### and automize this part 
 main_eng_data <- eng_fb_data %>% mutate(`FT / HT` =
