@@ -1,6 +1,12 @@
 library(rvest)
 library(stringr)
 library(Hmisc)
+library(fresh)
+library(dplyr)
+library(tidyverse)
+library(lubridate)
+library(DT)
+library(tibble)
 
 ### Very basic web scrapping method for football data
 ### Verson: 09/06/2022 
@@ -81,12 +87,8 @@ for(link in france_links$csv){
   main_france_data <- bind_rows(main_france_data, X)
 }
 
-
-
-
-
-### and automize this part 
-main_eng_data <- eng_fb_data %>% mutate(`FT / HT` =
+### Additional columns
+main_eng_data <- main_eng_data %>% mutate(`FT / HT` =
                                              if_else(`FTR` == "H" & `HTR` == "H", "1/1", if_else(
                                                `FTR` == "H" & `HTR` == "A", "2/1", if_else(
                                                  `FTR` == "A" & `HTR` == "A"," 2/2", if_else(
@@ -108,10 +110,84 @@ main_eng_data <- eng_fb_data %>% mutate(`FT / HT` =
                                            
 )
 
+main_france_data <- main_france_data %>% mutate(`FT / HT` =
+                                          if_else(`FTR` == "H" & `HTR` == "H", "1/1", if_else(
+                                            `FTR` == "H" & `HTR` == "A", "2/1", if_else(
+                                              `FTR` == "A" & `HTR` == "A"," 2/2", if_else(
+                                                `FTR` == "A" & `HTR` == "H", "1/2", if_else(
+                                                  `FTR` == "D" & `HTR` == "H", '1/x', if_else(
+                                                    `FTR` == "D" & `HTR` == "A", "2/x", if_else(
+                                                      `FTR` == "D" & `HTR` == "D", "x/x", if_else(
+                                                        `FTR` == "H" & `HTR` =="D", "x/1", if_else(
+                                                          `FTR` == "A" & `HTR` == "D", "x/2", NULL
+                                                        )
+                                                      )
+                                                    )
+                                                  )
+                                                )
+                                              )
+                                            )
+                                          ) )
+                                        
+                                        
+)
+
+main_germany_data <- main_germany_data %>% mutate(`FT / HT` =
+                                                  if_else(`FTR` == "H" & `HTR` == "H", "1/1", if_else(
+                                                    `FTR` == "H" & `HTR` == "A", "2/1", if_else(
+                                                      `FTR` == "A" & `HTR` == "A"," 2/2", if_else(
+                                                        `FTR` == "A" & `HTR` == "H", "1/2", if_else(
+                                                          `FTR` == "D" & `HTR` == "H", '1/x', if_else(
+                                                            `FTR` == "D" & `HTR` == "A", "2/x", if_else(
+                                                              `FTR` == "D" & `HTR` == "D", "x/x", if_else(
+                                                                `FTR` == "H" & `HTR` =="D", "x/1", if_else(
+                                                                  `FTR` == "A" & `HTR` == "D", "x/2", NULL
+                                                                )
+                                                              )
+                                                            )
+                                                          )
+                                                        )
+                                                      )
+                                                    )
+                                                  ) )
+                                                
+                                                
+)
+
+main_spain_data <- main_spain_data %>% mutate(`FT / HT` =
+                                                    if_else(`FTR` == "H" & `HTR` == "H", "1/1", if_else(
+                                                      `FTR` == "H" & `HTR` == "A", "2/1", if_else(
+                                                        `FTR` == "A" & `HTR` == "A"," 2/2", if_else(
+                                                          `FTR` == "A" & `HTR` == "H", "1/2", if_else(
+                                                            `FTR` == "D" & `HTR` == "H", '1/x', if_else(
+                                                              `FTR` == "D" & `HTR` == "A", "2/x", if_else(
+                                                                `FTR` == "D" & `HTR` == "D", "x/x", if_else(
+                                                                  `FTR` == "H" & `HTR` =="D", "x/1", if_else(
+                                                                    `FTR` == "A" & `HTR` == "D", "x/2", NULL
+                                                                  )
+                                                                )
+                                                              )
+                                                            )
+                                                          )
+                                                        )
+                                                      )
+                                                    ) )
+                                                  
+                                                  
+)
+
+
+
 main_eng_data$Date <- as.Date(main_eng_data$Date, "%d/%m/%Y")
+main_france_data$Date <- as.Date(main_france_data$Date, "%d/%m/%Y")
+main_germany_data$Date <- as.Date(main_germany_data$Date, "%d/%m/%Y")
+main_spain_data$Date <- as.Date(main_spain_data$Date, "%d/%m/%Y")
 
+### Save uploaded data
 saveRDS(main_eng_data, "data/main_eng_data.rds")
-
+saveRDS(main_france_data, "data/main_france_data.rds")
+saveRDS(main_germany_data, "data/main_germany_data.rds")
+saveRDS(main_spain_data, "data/main_spain_data.rds")
 
     
   

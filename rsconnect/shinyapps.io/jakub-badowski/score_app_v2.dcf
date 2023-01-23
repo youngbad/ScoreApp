@@ -1,0 +1,13 @@
+name: score_app_v2
+title: score_app_v2
+username:
+account: jakub-badowski
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8103330
+bundleId: 6764767
+url: https://jakub-badowski.shinyapps.io/score_app_v2/
+when: 1674492719.11832
+lastSyncTime: 1674492719.11832
+asMultiple: FALSE
+asStatic: FALSE
