@@ -6,6 +6,7 @@ library(tidyverse)
 library(lubridate)
 library(DT)
 library(tibble)
+library(ggplot)
 
 #GIT PASS 123456
 # create the theme with a cyberpunk color palette
