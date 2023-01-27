@@ -1,0 +1,39 @@
+source('2_content/1_hometab/1_hometab_ui.R')
+source('2_content/2_premierleague/1_premierleague_maintab_ui.R')
+source('2_content/2_premierleague/2_premierleague_fixes_ui.R')
+source('2_content/2_premierleague/3_premierleague_matchstats_ui.R')
+source('2_content/2_premierleague/4_premierleague_referees_ui.R')
+source('2_content/3_premierdivision/1_premierdivision_maintab_ui.R')
+source('2_content/3_premierdivision/2_premierdivision_fixes_ui.R')
+source('2_content/3_premierdivision/3_premierdivision_matchstats_ui.R')
+source('2_content/3_premierdivision/4_premierdivision_referees_ui.R')
+source('2_content/4_ligue1/1_ligue1_maintab_ui.R')
+source('2_content/4_ligue1/2_ligue1_fixes_ui.R')
+source('2_content/4_ligue1/3_ligue1_matchstats_ui.R')
+source('2_content/4_ligue1/4_ligue1_referees_ui.R')
+source('2_content/5_bundesliga/1_bundesliga_maintab_ui.R')
+source('2_content/5_bundesliga/2_bundesliga_fixes_ui.R')
+source('2_content/5_bundesliga/3_bundesliga_matchstats_ui.R')
+source('2_content/5_bundesliga/4_bundesliga_referees_ui.R')
+
+body <- dashboardBody(
+  tabItems(
+    hometab_ui,
+    pl_maintab_ui,
+    pl_fixes_ui,
+    pl_matchstats_ui,
+    pl_referees_ui,
+    pd_maintab_ui,
+    pd_fixes_ui,
+    pd_matchstats_ui,
+    pd_referees_ui,
+    l1_maintab_ui,
+    l1_fixes_ui,
+    l1_matchstats_ui,
+    l1_referees_ui,
+    bl_maintab_ui,
+    bl_fixes_ui,
+    bl_matchstats_ui,
+    bl_referees_ui
+  )
+)
