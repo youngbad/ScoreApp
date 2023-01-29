@@ -8,5 +8,5 @@ ui = dashboardPage(
         sidebar = sidebar,
         body = body,
         controlbar = controlbar,
-        title = "Skin Selector"
+        title = "ScoreApp"
     )

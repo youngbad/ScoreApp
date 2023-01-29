@@ -8,8 +8,8 @@ library(lubridate)
 library(DT)
 library(tibble)
 
-### Very basic web scrapping method for football data
-### Verson: 09/06/2022 
+### Very basic web scrapping method for football data from https://www.football-data.co.uk/
+### Version date as of: 27/01/2023
 
 page <- read_html("https://www.football-data.co.uk/")
 league_sites <- tibble()
