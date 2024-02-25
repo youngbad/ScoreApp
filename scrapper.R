@@ -51,11 +51,12 @@ france_links <-  csv_links[grepl('france', csv_links$link), 'csv']
 main_eng_data <-tibble()
 
 for(link in eng_links$csv){
-  
+  print(link)
   link_to_read <- link
-  X <- read.csv(paste0('https://www.football-data.co.uk/',link_to_read))
+  X <- read.csv2(paste0('https://www.football-data.co.uk/',link_to_read), sep = ',', fileEncoding="latin1")
  
-  main_eng_data <- bind_rows(main_eng_data, X)
+  main_eng_data_t <- bind_rows(main_eng_data, a)
+  
 }
 ### GERMANY ###
 main_germany_data <- tibble()
@@ -97,7 +98,7 @@ main_eng_data <- main_eng_data %>% mutate(`FT / HT` =
                                                        `FTR` == "D" & `HTR` == "A", "2/x", if_else(
                                                          `FTR` == "D" & `HTR` == "D", "x/x", if_else(
                                                            `FTR` == "H" & `HTR` =="D", "x/1", if_else(
-                                                             `FTR` == "A" & `HTR` == "D", "x/2", NULL
+                                                             `FTR` == "A" & `HTR` == "D", "x/2", NA
                                                            )
                                                          )
                                                        )
@@ -105,9 +106,8 @@ main_eng_data <- main_eng_data %>% mutate(`FT / HT` =
                                                    )
                                                  )
                                                )
-                                             ) )
-                                           
-                                           
+                                             ),
+                                           )
 )
 
 main_france_data <- main_france_data %>% mutate(`FT / HT` =
@@ -119,7 +119,7 @@ main_france_data <- main_france_data %>% mutate(`FT / HT` =
                                                     `FTR` == "D" & `HTR` == "A", "2/x", if_else(
                                                       `FTR` == "D" & `HTR` == "D", "x/x", if_else(
                                                         `FTR` == "H" & `HTR` =="D", "x/1", if_else(
-                                                          `FTR` == "A" & `HTR` == "D", "x/2", NULL
+                                                          `FTR` == "A" & `HTR` == "D", "x/2", NA
                                                         )
                                                       )
                                                     )
@@ -141,7 +141,7 @@ main_germany_data <- main_germany_data %>% mutate(`FT / HT` =
                                                             `FTR` == "D" & `HTR` == "A", "2/x", if_else(
                                                               `FTR` == "D" & `HTR` == "D", "x/x", if_else(
                                                                 `FTR` == "H" & `HTR` =="D", "x/1", if_else(
-                                                                  `FTR` == "A" & `HTR` == "D", "x/2", NULL
+                                                                  `FTR` == "A" & `HTR` == "D", "x/2", NA
                                                                 )
                                                               )
                                                             )
@@ -163,7 +163,7 @@ main_spain_data <- main_spain_data %>% mutate(`FT / HT` =
                                                               `FTR` == "D" & `HTR` == "A", "2/x", if_else(
                                                                 `FTR` == "D" & `HTR` == "D", "x/x", if_else(
                                                                   `FTR` == "H" & `HTR` =="D", "x/1", if_else(
-                                                                    `FTR` == "A" & `HTR` == "D", "x/2", NULL
+                                                                    `FTR` == "A" & `HTR` == "D", "x/2", NA
                                                                   )
                                                                 )
                                                               )
@@ -184,13 +184,7 @@ main_germany_data$Date <- as.Date(main_germany_data$Date, "%d/%m/%Y")
 main_spain_data$Date <- as.Date(main_spain_data$Date, "%d/%m/%Y")
 
 ### Save uploaded data
-saveRDS(main_eng_data, "data/main_eng_data.rds")
-saveRDS(main_france_data, "data/main_france_data.rds")
-saveRDS(main_germany_data, "data/main_germany_data.rds")
-saveRDS(main_spain_data, "data/main_spain_data.rds")
-
-    
-  
-
-                
-                
+saveRDS(unique(main_eng_data), "data/main_eng_data.rds")
+saveRDS(unique(main_france_data), "data/main_france_data.rds")
+saveRDS(unique(main_germany_data), "data/main_germany_data.rds")
+saveRDS(unique(main_spain_data), "data/main_spain_data.rds")

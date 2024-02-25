@@ -31,8 +31,6 @@ referees_pl_tab <- reactiveVal({
          `Away Team Fouls Committed` = AF,
          # `Home Team Free Kicks Conceded` = HFKC,
          # `Away Team Free Kicks Conceded` = AFKC,
-         `Home Team Offsides` = HO,
-         `Away Team Offsides` = AO,
          `Home Team Yellow Cards` = HY,
          `Away Team Yellow Cards` = AY,
          `Home Team Red Cards` = HR,
@@ -41,8 +39,6 @@ referees_pl_tab <- reactiveVal({
     summarise(
       `Home Team Total Fouls Committed` = sum(`Home Team Fouls Committed`, na.rm = T),
       `Away Team Total Fouls Committed` = sum(`Away Team Fouls Committed`, na.rm = T),
-      `Home Team Total Offsides` = sum(`Home Team Offsides`, na.rm =T),
-      `Away Team Total Offsides` = sum(`Away Team Offsides`, na.rm = T),
       `Home Team Total Yellow Cards` = sum(`Home Team Yellow Cards`, na.rm = T),
       `Away Team Total Yellow Cards` = sum(`Away Team Yellow Cards`, na.rm = T),
       `Home Team Total Red Cards` = sum(`Home Team Red Cards`, na.rm = T),
