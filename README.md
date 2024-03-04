@@ -10,5 +10,4 @@ The application allows you to track the data of various football leagues includi
   
 The main purpose of the app is to be able to trace the data and catch certain patterns that allow you to notice certain relationships.
 
-Preview:
-https://jakub-badowski.shinyapps.io/refreshment_dasboard/
+
